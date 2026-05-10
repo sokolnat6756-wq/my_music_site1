@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Небольшой музыкальный лендинг с интерактивным функционалом"
+    />
+    <title>Моя музыка</title>
+    <script type="module" src="/src/main.js" defer></script>
+  </head>
+  <body>
+    <header class="hero">
+      <nav class="nav container">
+        <a class="logo" href="#top">MUSIC SPACE</a>
+        <button id="themeToggle" class="theme-btn" type="button">
+          Сменить тему
+        </button>
+      </nav>
+      <div class="container hero-content" id="top">
+        <p class="tag">Персональный проект</p>
+        <h1>Добро пожаловать в твой музыкальный уголок</h1>
+        <p id="timeGreeting" class="subtitle">
+          Готовим приветствие...
+        </p>
+        <a class="cta" href="#tracks">Смотреть треки</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="container section" id="tracks">
+        <div class="section-head">
+          <h2>Подборка на сегодня</h2>
+          <p>Добавляй понравившиеся треки в быстрый список.</p>
+        </div>
+        <div id="trackGrid" class="track-grid"></div>
+      </section>
+
+      <section class="container section">
+        <div class="section-head">
+          <h2>Быстрый плейлист</h2>
+          <p>Треки, которые ты добавил в избранное, сохраняются в браузере.</p>
+        </div>
+        <ul id="playlist" class="playlist"></ul>
+      </section>
+
+      <section class="container section">
+        <div class="section-head">
+          <h2>Мини-форма настроения</h2>
+          <p>Выбери жанр, который хочешь послушать сегодня.</p>
+        </div>
+        <form id="genreForm" class="genre-form">
+          <label for="genreInput">Любимый жанр:</label>
+          <input
+            id="genreInput"
+            name="genre"
+            type="text"
+            placeholder="Например: lo-fi"
+            required
+          />
+          <button type="submit">Сохранить</button>
+        </form>
+        <p id="genreMessage" class="genre-message"></p>
+      </section>
+    </main>
+  </body>
+  </html>
+<!DOCTYPE html>
+<!-- Главная страница: авторские песни Натальи Камаловой (прослушивание и заказ) -->
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Авторские и персональные песни от Натальи Камаловой: слушайте онлайн и заказывайте песню для близких и важных событий."
+  />
+  <title>Наталья Камалова — Авторские и персональные песни</title>
+
+  <!-- Подключение шрифтов: Cormorant Garamond — выразительные заголовки; Plus Jakarta Sans — удобное чтение текста и форм -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+    rel="stylesheet"
+  />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Настройка Tailwind: семейства шрифтов (display / sans) и тёплая «концертная» палитра -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Cormorant Garamond"', "Georgia", "serif"],
+            sans: ['"Plus Jakarta Sans"', "system-ui", "sans-serif"]
+          },
+          colors: {
+            cream: "#faf7f2",
+            blush: "#f0dde4",
+            sand: "#e2cfc0",
+            gold: "#a06d50",
+            goldDark: "#7d4f3a",
+            ink: "#252030"
+          },
+          boxShadow: {
+            soft: "0 15px 40px rgba(37, 32, 48, 0.1)"
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<!-- font-sans задаёт основной текст; фон и цвет текста — из кастомной палитры -->
+<body class="bg-cream font-sans text-ink antialiased">
+  <!-- Шапка: логотип-имя (шрифт display) и навигация -->
+  <header id="header" class="fixed top-0 z-50 w-full transition-all duration-300">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+      <a href="#hero" class="font-display text-xl font-semibold tracking-wide">
+        Наталья Камалова
+      </a>
+      <nav class="hidden items-center gap-6 text-sm font-medium md:flex">
+        <a class="nav-link" href="#songs">Песни</a>
+        <a class="nav-link" href="#order">Заказать</a>
+        <a class="nav-link" href="#about">О Наталье</a>
+        <a class="nav-link" href="#reviews">Отзывы</a>
+        <a class="nav-link" href="#faq">FAQ</a>
+        <a class="nav-link" href="#contacts">Контакты</a>
+      </nav>
+      <button id="mobile-menu-btn" class="md:hidden" aria-label="Открыть меню">
+        <span class="block h-0.5 w-6 bg-ink"></span>
+        <span class="mt-1.5 block h-0.5 w-6 bg-ink"></span>
+        <span class="mt-1.5 block h-0.5 w-6 bg-ink"></span>
+      </button>
+    </div>
+    <nav id="mobile-menu" class="mx-4 hidden rounded-2xl border border-gold/20 bg-white/95 p-4 shadow-soft md:hidden">
+      <div class="flex flex-col gap-3 text-sm font-medium">
+        <a class="mobile-link" href="#songs">Песни</a>
+        <a class="mobile-link" href="#order">Заказать</a>
+        <a class="mobile-link" href="#about">О Наталье</a>
+        <a class="mobile-link" href="#reviews">Отзывы</a>
+        <a class="mobile-link" href="#faq">FAQ</a>
+        <a class="mobile-link" href="#contacts">Контакты</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="pt-24">
+    <!-- Герой-блок: главный заголовок и краткое описание услуги -->
+    <section id="hero" class="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-24">
+      <div class="my-auto animate-on-scroll">
+        <p class="mb-3 inline-flex rounded-full bg-blush px-4 py-1 text-sm font-medium text-goldDark">
+          Музыка с душой и смыслом
+        </p>
+        <h1 class="font-display text-4xl font-bold leading-tight sm:text-5xl">
+          Авторские и персональные песни от Натальи Камаловой
+        </h1>
+        <p class="mt-5 max-w-xl text-base text-ink/80 sm:text-lg">
+          Песни, которые сохраняют чувства, истории и важные моменты вашей жизни
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#songs" class="btn-primary">Слушать песни</a>
+          <a href="#order" class="btn-secondary">Заказать песню</a>
+        </div>
+      </div>
+      <div class="animate-on-scroll rounded-3xl bg-gradient-to-br from-sand/60 via-blush/50 to-white p-6 shadow-soft">
+        <div class="grid gap-4 rounded-2xl border border-gold/20 bg-white/85 p-6 backdrop-blur">
+          <p class="font-display text-2xl font-semibold">
+            Песня, которая останется в сердце
+          </p>
+          <p class="text-sm leading-relaxed text-ink/75">
+            Для дня рождения, свадьбы, семейного праздника или личной истории — каждая композиция создается индивидуально, с вниманием к деталям и чувствам.
+          </p>
+          <ul class="space-y-2 text-sm">
+            <li class="feature-chip">Индивидуальный сюжет и текст</li>
+            <li class="feature-chip">Эмоциональная подача</li>
+            <li class="feature-chip">Готово к памятной дате</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Каталог аудио: сетка карточек заполняется из script.js -->
+    <section id="songs" class="section-wrap">
+      <div class="section-title animate-on-scroll">
+        <h2>Песни</h2>
+        <p>Слушайте авторские композиции и примеры персональных песен.</p>
+      </div>
+      <div class="animate-on-scroll mt-6 max-w-xl">
+        <label class="form-field">
+          Поиск по названию или описанию
+          <input id="song-search" type="search" placeholder="Например: мама, юбилей, любовь" />
+        </label>
+      </div>
+      <div class="animate-on-scroll mt-6 flex flex-wrap gap-2" id="song-filters"></div>
+      <div id="songs-grid" class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"></div>
+    </section>
+
+    <section id="process" class="section-wrap">
+      <div class="section-title animate-on-scroll">
+        <h2>Как проходит работа</h2>
+        <p>Прозрачный процесс от идеи до готовой песни.</p>
+      </div>
+      <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4" id="process-grid"></div>
+    </section>
+
+    <!-- Варианты заказа (категории) -->
+    <section id="order-categories" class="section-wrap">
+      <div class="section-title animate-on-scroll">
+        <h2>Категории заказов</h2>
+        <p>Выберите подходящий формат — или закажите полностью индивидуальную песню.</p>
+      </div>
+      <div id="categories-grid" class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+    </section>
+
+    <!-- Форма заявки на персональную песню -->
+    <section id="order" class="section-wrap">
+      <div class="section-title animate-on-scroll">
+        <h2>Заказ персональной песни</h2>
+        <p>Расскажите историю — Наталья создаст песню, которая будет звучать именно о вашем человеке.</p>
+      </div>
+      <form id="order-form" class="animate-on-scroll mt-8 grid gap-4 rounded-3xl border border-gold/20 bg-white p-6 shadow-soft lg:grid-cols-2">
+        <label class="form-field">
+          Имя заказчика
+          <input type="text" name="customerName" required />
+        </label>
+        <label class="form-field">
+          Телефон
+          <input type="tel" name="phone" required />
+        </label>
+        <label class="form-field">
+          WhatsApp / Telegram
+          <input type="text" name="messenger" />
+        </label>
+        <label class="form-field">
+          Email
+          <input type="email" name="email" required />
+        </label>
+        <label class="form-field">
+          Для кого песня
+          <input type="text" name="forWhom" required />
+        </label>
+        <label class="form-field">
+          Повод
+          <input type="text" name="occasion" required />
+        </label>
+        <label class="form-field">
+          Желаемое настроение песни
+          <input type="text" name="mood" />
+        </label>
+        <label class="form-field">
+          Дата, к которой нужна песня
+          <input type="date" name="deadline" />
+        </label>
+        <label class="form-field lg:col-span-2">
+          Важные детали о человеке
+          <textarea name="details" rows="4" required></textarea>
+        </label>
+        <label class="form-field lg:col-span-2">
+          Пожелания к тексту
+          <textarea name="lyricsWishes" rows="4"></textarea>
+        </label>
+        <label class="form-field lg:col-span-2">
+          Удобный канал связи
+          <select name="contactPreference">
+            <option value="Телефон">Телефон</option>
+            <option value="WhatsApp">WhatsApp</option>
+            <option value="Telegram">Telegram</option>
+            <option value="Email">Email</option>
+          </select>
+        </label>
+        <div class="lg:col-span-2 flex flex-wrap items-center gap-4">
+          <button type="submit" class="btn-primary">Отправить заявку</button>
+          <p id="form-message" class="text-sm text-goldDark"></p>
+        </div>
+      </form>
+    </section>
+
+    <!-- Блок об авторе и место под фотографию -->
+    <section id="about" class="section-wrap">
+      <div class="section-title animate-on-scroll">
+        <h2>О Наталье Камаловой</h2>
+      </div>
+      <div class="grid gap-6 lg:grid-cols-2">
+        <div class="animate-on-scroll rounded-3xl border border-gold/20 bg-white p-6 shadow-soft">
+          <p class="text-base leading-relaxed text-ink/85 sm:text-lg">
+            Наталья Камалова — автор песен, создающая музыкальные истории для особенных событий, близких людей и важных моментов жизни. Каждая песня рождается из чувств, воспоминаний и личной истории заказчика.
+          </p>
+        </div>
+        <article class="author-photo-card animate-on-scroll">
+          <div class="author-photo-placeholder" role="img" aria-label="Место для фото Натальи Камаловой">
+            <p class="author-photo-placeholder-title">Фото Натальи Камаловой</p>
+            <p class="author-photo-placeholder-subtitle">Вставьте изображение позже</p>
+          </div>
+          <div class="author-photo-caption">
+            <p class="font-display text-xl font-semibold">Наталья Камалова</p>
+            <p class="mt-1 text-sm text-ink/75">Автор песен и персональных музыкальных историй</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Преимущества (список из script.js) -->
+    <section id="benefits" class="section-wrap">
+      <div class="section-title animate-on-scroll">
+        <h2>Почему выбирают Наталью</h2>
+      </div>
+      <ul id="benefits-list" class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></ul>
+    </section>
+
+    <!-- Отзывы клиентов -->
+    <section id="reviews" class="section-wrap">
+      <div class="section-title animate-on-scroll">
+        <h2>Отзывы</h2>
+      </div>
+      <div id="reviews-grid" class="mt-8 grid gap-4 lg:grid-cols-3"></div>
+    </section>
+
+    <!-- Частые вопросы (аккордеон в script.js) -->
+    <section id="faq" class="section-wrap">
+      <div class="section-title animate-on-scroll">
+        <h2>FAQ</h2>
+      </div>
+      <div id="faq-list" class="mt-8 space-y-3"></div>
+    </section>
+
+    <!-- Контакты для связи -->
+    <section id="contacts" class="section-wrap">
+      <div class="section-title animate-on-scroll">
+        <h2>Контакты</h2>
+      </div>
+      <div id="contacts-grid" class="mt-8 grid gap-4 rounded-3xl border border-gold/20 bg-white p-6 shadow-soft sm:grid-cols-2 lg:grid-cols-3"></div>
+    </section>
+  </main>
+
+  <!-- Подвал сайта -->
+  <footer class="border-t border-gold/20 bg-white/80">
+    <div class="mx-auto max-w-7xl px-4 py-6 text-center text-sm text-ink/75 sm:px-6 lg:px-8">
+      © <span id="current-year">2026</span> Наталья Камалова. Авторские и персональные песни.
+    </div>
+  </footer>
+
+  <button id="scroll-top-btn" class="scroll-top-btn hidden" type="button" aria-label="Наверх">
+    ↑
+  </button>
+
+  <script src="./script.js"></script>
+</body>
+</html>
